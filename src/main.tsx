@@ -9,11 +9,11 @@ import { ToastProvider } from './context/ToastContext'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <JournalProvider>
-      <GoogleDriveProvider>
-        <ToastProvider>
+      <ToastProvider>
+        <GoogleDriveProvider>
           <App />
-        </ToastProvider>
-      </GoogleDriveProvider>
+        </GoogleDriveProvider>
+      </ToastProvider>
     </JournalProvider>
   </StrictMode>,
 )

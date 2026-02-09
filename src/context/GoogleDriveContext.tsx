@@ -47,7 +47,7 @@ export const GoogleDriveProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const isRestoring = useRef(false);
   const isFirstMount = useRef(true);
-  const syncTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const syncTimeoutRef = useRef<number | null>(null);
 
   // Initialize Device ID
   useEffect(() => {
