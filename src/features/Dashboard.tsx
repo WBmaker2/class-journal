@@ -3,6 +3,7 @@ import { useJournal } from '../context/JournalContext';
 import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
 import { TodoListManager } from './TodoListManager';
+import { AtmosphereStats } from './AtmosphereStats';
 
 const COLORS = {
   Present: '#16a34a',
@@ -110,6 +111,9 @@ export const Dashboard: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* New Atmosphere Stats Component */}
+      <AtmosphereStats />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
