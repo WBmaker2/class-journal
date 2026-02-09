@@ -46,7 +46,7 @@ export const TodoListManager: React.FC = () => {
     e.currentTarget.classList.add('opacity-50');
   };
 
-  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>, position: number) => {
+  const handleDragEnter = (position: number) => {
     dragOverItem.current = position;
   };
 
@@ -111,7 +111,7 @@ export const TodoListManager: React.FC = () => {
                 key={todo.id} 
                 draggable
                 onDragStart={(e) => handleDragStart(e, index)}
-                onDragEnter={(e) => handleDragEnter(e, index)}
+                onDragEnter={() => handleDragEnter(index)}
                 onDragEnd={handleDragEnd}
                 onDragOver={(e) => e.preventDefault()}
                 className={`flex items-center justify-between p-3 rounded-lg border transition-all ${
