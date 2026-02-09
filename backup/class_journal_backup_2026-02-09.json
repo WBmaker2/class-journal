@@ -1,0 +1,315 @@
+{
+  "records": [
+    {
+      "date": "2026-02-08",
+      "weather": "Cloudy",
+      "atmosphere": "Energetic",
+      "attendance": [
+        {
+          "studentId": "1",
+          "status": "Present"
+        },
+        {
+          "studentId": "2",
+          "status": "Early Leave"
+        },
+        {
+          "studentId": "3",
+          "status": "Late"
+        },
+        {
+          "studentId": "4",
+          "status": "Present"
+        },
+        {
+          "studentId": "5",
+          "status": "Present"
+        },
+        {
+          "studentId": "1770554808115",
+          "status": "Present"
+        },
+        {
+          "studentId": "1770554814926",
+          "status": "Present"
+        }
+      ],
+      "lessonLogs": [
+        {
+          "period": 1,
+          "subject": "국어",
+          "content": "23432"
+        },
+        {
+          "period": 2,
+          "subject": "과학",
+          "content": "324324"
+        },
+        {
+          "period": 3,
+          "subject": "사회",
+          "content": "324"
+        },
+        {
+          "period": 4,
+          "subject": "사회",
+          "content": "25"
+        },
+        {
+          "period": 5,
+          "subject": "체육",
+          "content": "23423"
+        },
+        {
+          "period": 6,
+          "subject": "창체",
+          "content": "23532"
+        }
+      ],
+      "classLog": "행복한 하루!"
+    },
+    {
+      "date": "2026-02-07",
+      "weather": "Snowy",
+      "atmosphere": "Tired",
+      "attendance": [
+        {
+          "studentId": "1",
+          "status": "Absent"
+        },
+        {
+          "studentId": "2",
+          "status": "Present"
+        },
+        {
+          "studentId": "3",
+          "status": "Present"
+        },
+        {
+          "studentId": "4",
+          "status": "Present"
+        },
+        {
+          "studentId": "5",
+          "status": "Present"
+        },
+        {
+          "studentId": "1770554808115",
+          "status": "Present"
+        },
+        {
+          "studentId": "1770554814926",
+          "status": "Present"
+        }
+      ],
+      "lessonLogs": [
+        {
+          "period": 1,
+          "subject": "음악",
+          "content": "177"
+        },
+        {
+          "period": 2,
+          "subject": "미술",
+          "content": "277"
+        },
+        {
+          "period": 3,
+          "subject": "사회",
+          "content": "377"
+        },
+        {
+          "period": 4,
+          "subject": "실과",
+          "content": "477"
+        },
+        {
+          "period": 5,
+          "subject": "창체",
+          "content": "577"
+        },
+        {
+          "period": 6,
+          "subject": "국어",
+          "content": "677"
+        }
+      ],
+      "classLog": "토요일"
+    },
+    {
+      "date": "2026-02-09",
+      "weather": "Sunny",
+      "atmosphere": "Calm",
+      "attendance": [
+        {
+          "studentId": "1",
+          "status": "Present"
+        },
+        {
+          "studentId": "2",
+          "status": "Present"
+        },
+        {
+          "studentId": "3",
+          "status": "Present"
+        },
+        {
+          "studentId": "4",
+          "status": "Present"
+        },
+        {
+          "studentId": "5",
+          "status": "Present"
+        },
+        {
+          "studentId": "1770554808115",
+          "status": "Present"
+        },
+        {
+          "studentId": "1770554814926",
+          "status": "Present"
+        }
+      ],
+      "lessonLogs": [
+        {
+          "period": 1,
+          "subject": "",
+          "content": "81"
+        },
+        {
+          "period": 2,
+          "subject": "",
+          "content": "82"
+        },
+        {
+          "period": 3,
+          "subject": "",
+          "content": "83"
+        },
+        {
+          "period": 4,
+          "subject": "",
+          "content": "84"
+        },
+        {
+          "period": 5,
+          "subject": "",
+          "content": "8885"
+        },
+        {
+          "period": 6,
+          "subject": "",
+          "content": "86"
+        }
+      ],
+      "classLog": "8일"
+    }
+  ],
+  "students": [
+    {
+      "id": "1",
+      "name": "김철수",
+      "number": 1,
+      "notes": []
+    },
+    {
+      "id": "2",
+      "name": "이영희",
+      "number": 2,
+      "notes": []
+    },
+    {
+      "id": "3",
+      "name": "박지민",
+      "number": 3,
+      "notes": []
+    },
+    {
+      "id": "4",
+      "name": "최다은",
+      "number": 4,
+      "notes": []
+    },
+    {
+      "id": "5",
+      "name": "정우진",
+      "number": 5,
+      "notes": []
+    },
+    {
+      "id": "1770554808115",
+      "name": "홍길동",
+      "number": 6,
+      "notes": []
+    },
+    {
+      "id": "1770554814926",
+      "name": "임꺽정",
+      "number": 7,
+      "notes": []
+    }
+  ],
+  "todos": [
+    {
+      "id": "1770549104676",
+      "content": "1111",
+      "completed": false,
+      "dueDate": "2026-02-08"
+    },
+    {
+      "id": "1770549106204",
+      "content": "222",
+      "completed": false,
+      "dueDate": "2026-02-08"
+    },
+    {
+      "id": "1770549107726",
+      "content": "333",
+      "completed": false,
+      "dueDate": "2026-02-08"
+    },
+    {
+      "id": "1770549111643",
+      "content": "444",
+      "completed": false,
+      "dueDate": "2026-02-08"
+    },
+    {
+      "id": "1770549116879",
+      "content": "가나다",
+      "completed": false,
+      "dueDate": "2026-02-08"
+    },
+    {
+      "id": "1770554200947",
+      "content": "오늘은",
+      "completed": false,
+      "dueDate": "2026-02-07"
+    },
+    {
+      "id": "1770554203940",
+      "content": "무엇을",
+      "completed": false,
+      "dueDate": "2026-02-07"
+    },
+    {
+      "id": "1770554205521",
+      "content": "할까?",
+      "completed": false,
+      "dueDate": "2026-02-07"
+    },
+    {
+      "id": "1770555669034",
+      "content": "월요일",
+      "completed": false,
+      "dueDate": "2026-02-09"
+    },
+    {
+      "id": "1770555671159",
+      "content": "화이팅",
+      "completed": false,
+      "dueDate": "2026-02-09"
+    }
+  ],
+  "exportedAt": "2026-02-09T00:16:31.271Z"
+}

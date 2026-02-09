@@ -1,6 +1,6 @@
 export type AttendanceStatus = 'Present' | 'Absent' | 'Late' | 'Early Leave';
-export type Weather = 'Sunny' | 'Cloudy' | 'Rainy' | 'Snowy' | 'Windy';
-export type Atmosphere = 'Calm' | 'Energetic' | 'Distracted' | 'Tired';
+export type Weather = 'Sunny' | 'Cloudy' | 'Rainy' | 'Snowy' | 'Windy' | 'Stormy' | 'Foggy';
+export type Atmosphere = 'Calm' | 'Energetic' | 'Distracted' | 'Tired' | 'Passionate' | 'Harmonious' | 'Tense' | 'Joyful';
 
 export interface Student {
   id: string;

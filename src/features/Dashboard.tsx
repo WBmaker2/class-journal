@@ -11,6 +11,18 @@ const COLORS = {
   'Early Leave': '#2563eb'
 };
 
+const WEATHER_EMOJIS: Record<string, string> = {
+  Sunny: '☀️', Cloudy: '☁️', Rainy: '☔', Snowy: '❄️', Windy: '🌬️', Stormy: '⚡', Foggy: '🌫️'
+};
+
+const ATMOSPHERE_EMOJIS: Record<string, string> = {
+  Calm: '🧘', Energetic: '🏃', Joyful: '✨', Passionate: '🔥', Harmonious: '🤝', Distracted: '🌀', Tense: '🤐', Tired: '🥱'
+};
+
+const ATMOSPHERE_LABELS: Record<string, string> = {
+  Calm: '차분함', Energetic: '활기참', Joyful: '즐거움', Passionate: '열정적', Harmonious: '화목함', Distracted: '산만함', Tense: '긴장됨', Tired: '피곤함'
+};
+
 export const Dashboard: React.FC = () => {
   const { records, students, currentDate } = useJournal();
 
@@ -101,16 +113,33 @@ export const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
-          <CardHeader title="학급 요약" />
+          <CardHeader title="오늘의 요약" />
           <CardContent>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-blue-600 font-medium">총 학생 수</p>
-                <p className="text-2xl font-bold text-blue-900">{students.length}명</p>
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100 flex items-center gap-4">
+                <div className="text-3xl">{currentRecord ? WEATHER_EMOJIS[currentRecord.weather] : '❓'}</div>
+                <div>
+                  <p className="text-xs text-blue-500 font-bold uppercase">날씨</p>
+                  <p className="text-lg font-bold text-blue-900">{currentRecord ? currentRecord.weather : '기록 없음'}</p>
+                </div>
               </div>
-              <div className="p-4 bg-green-50 rounded-lg">
-                <p className="text-sm text-green-600 font-medium">누적 기록 수</p>
-                <p className="text-2xl font-bold text-green-900">{records.length}개</p>
+              <div className="p-4 bg-purple-50 rounded-2xl border border-purple-100 flex items-center gap-4">
+                <div className="text-3xl">{currentRecord ? ATMOSPHERE_EMOJIS[currentRecord.atmosphere] : '❓'}</div>
+                <div>
+                  <p className="text-xs text-purple-500 font-bold uppercase">분위기</p>
+                  <p className="text-lg font-bold text-purple-900">{currentRecord ? ATMOSPHERE_LABELS[currentRecord.atmosphere] : '기록 없음'}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                <p className="text-xs text-gray-500 font-bold uppercase mb-1">총 학생 수</p>
+                <p className="text-2xl font-bold text-gray-900">{students.length}명</p>
+              </div>
+              <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                <p className="text-xs text-gray-500 font-bold uppercase mb-1">누적 기록</p>
+                <p className="text-2xl font-bold text-gray-900">{records.length}개</p>
               </div>
             </div>
           </CardContent>

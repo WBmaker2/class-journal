@@ -6,19 +6,25 @@ import { Button } from '../components/ui/Button';
 import { Sun, Cloud, CloudRain, Snowflake, Wind, Smile, Zap, Meh, Moon, UserPlus } from 'lucide-react';
 import { StudentManagerModal } from './StudentManagerModal';
 
-const WEATHER_OPTIONS: { value: Weather; icon: any; label: string }[] = [
-  { value: 'Sunny', icon: Sun, label: '맑음' },
-  { value: 'Cloudy', icon: Cloud, label: '흐림' },
-  { value: 'Rainy', icon: CloudRain, label: '비' },
-  { value: 'Snowy', icon: Snowflake, label: '눈' },
-  { value: 'Windy', icon: Wind, label: '바람' },
+const WEATHER_OPTIONS: { value: Weather; emoji: string; label: string }[] = [
+  { value: 'Sunny', emoji: '☀️', label: '맑음' },
+  { value: 'Cloudy', emoji: '☁️', label: '흐림' },
+  { value: 'Rainy', emoji: '☔', label: '비' },
+  { value: 'Snowy', emoji: '❄️', label: '눈' },
+  { value: 'Windy', emoji: '🌬️', label: '바람' },
+  { value: 'Stormy', emoji: '⚡', label: '천둥' },
+  { value: 'Foggy', emoji: '🌫️', label: '안개' },
 ];
 
-const ATMOSPHERE_OPTIONS: { value: Atmosphere; icon: any; label: string }[] = [
-  { value: 'Calm', icon: Moon, label: '차분함' },
-  { value: 'Energetic', icon: Zap, label: '활기참' },
-  { value: 'Distracted', icon: Meh, label: '산만함' },
-  { value: 'Tired', icon: Smile, label: '피곤함' },
+const ATMOSPHERE_OPTIONS: { value: Atmosphere; emoji: string; label: string }[] = [
+  { value: 'Calm', emoji: '🧘', label: '차분함' },
+  { value: 'Energetic', emoji: '🏃', label: '활기참' },
+  { value: 'Joyful', emoji: '✨', label: '즐거움' },
+  { value: 'Passionate', emoji: '🔥', label: '열정적' },
+  { value: 'Harmonious', emoji: '🤝', label: '화목함' },
+  { value: 'Distracted', emoji: '🌀', label: '산만함' },
+  { value: 'Tense', emoji: '🤐', label: '긴장됨' },
+  { value: 'Tired', emoji: '🥱', label: '피곤함' },
 ];
 
 const STATUS_LABELS: Record<AttendanceStatus, string> = {
@@ -95,34 +101,44 @@ export const AttendanceTracker: React.FC = () => {
     <div className="space-y-6 relative">
       <Card>
         <CardHeader title="오늘의 정보" subtitle="날씨와 교실 분위기를 기록하세요" />
-        <CardContent className="flex flex-wrap gap-8">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">날씨</label>
-            <div className="flex gap-2">
+        <CardContent className="flex flex-col gap-6">
+          <div className="space-y-3">
+            <label className="text-sm font-bold text-gray-500 uppercase tracking-wider">오늘의 날씨</label>
+            <div className="flex flex-wrap gap-2">
               {WEATHER_OPTIONS.map((opt) => (
                 <button
                   key={opt.value}
                   onClick={() => updateRecord({ weather: opt.value })}
-                  className={`p-2 rounded-lg transition-all ${record.weather === opt.value ? 'bg-blue-100 text-blue-600 ring-2 ring-blue-500' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'}`}
+                  className={`flex flex-col items-center gap-1 p-3 rounded-2xl transition-all min-w-[64px] ${
+                    record.weather === opt.value 
+                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-200 scale-105' 
+                    : 'bg-white border border-gray-100 text-gray-400 hover:border-blue-200 hover:bg-blue-50/30'
+                  }`}
                   title={opt.label}
                 >
-                  <opt.icon size={20} />
+                  <span className="text-2xl">{opt.emoji}</span>
+                  <span className={`text-xs font-medium ${record.weather === opt.value ? 'text-white' : 'text-gray-500'}`}>{opt.label}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">분위기</label>
-            <div className="flex gap-2">
+          <div className="space-y-3">
+            <label className="text-sm font-bold text-gray-500 uppercase tracking-wider">교실 분위기</label>
+            <div className="flex flex-wrap gap-2">
               {ATMOSPHERE_OPTIONS.map((opt) => (
                 <button
                   key={opt.value}
                   onClick={() => updateRecord({ atmosphere: opt.value })}
-                  className={`p-2 rounded-lg transition-all ${record.atmosphere === opt.value ? 'bg-purple-100 text-purple-600 ring-2 ring-purple-500' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'}`}
+                  className={`flex flex-col items-center gap-1 p-3 rounded-2xl transition-all min-w-[64px] ${
+                    record.atmosphere === opt.value 
+                    ? 'bg-purple-500 text-white shadow-lg shadow-purple-200 scale-105' 
+                    : 'bg-white border border-gray-100 text-gray-400 hover:border-purple-200 hover:bg-purple-50/30'
+                  }`}
                   title={opt.label}
                 >
-                  <opt.icon size={20} />
+                  <span className="text-2xl">{opt.emoji}</span>
+                  <span className={`text-xs font-medium ${record.atmosphere === opt.value ? 'text-white' : 'text-gray-500'}`}>{opt.label}</span>
                 </button>
               ))}
             </div>
