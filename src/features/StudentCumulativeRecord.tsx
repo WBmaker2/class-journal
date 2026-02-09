@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useJournal } from '../context/JournalContext';
 import { Card, CardContent, CardHeader } from '../components/ui/Card';
-import { Save } from 'lucide-react';
-import { Button } from '../components/ui/Button';
 import type { DailyRecord } from '../types';
 
 export const StudentCumulativeRecord: React.FC = () => {
@@ -44,14 +42,7 @@ export const StudentCumulativeRecord: React.FC = () => {
 
   return (
     <Card>
-      <CardHeader title="학생별 누가기록" subtitle={`${currentDate} 학생별 관찰 내용 기록`} 
-        actions={
-          <Button onClick={handleSave} size="sm" className="flex items-center gap-2">
-            <Save size={16} />
-            저장
-          </Button>
-        }
-      />
+      <CardHeader title="학생별 누가기록" subtitle={`${currentDate} 학생별 관찰 내용 기록`} />
       <CardContent>
         <div className="divide-y divide-gray-100">
           {students.map(student => (
@@ -73,6 +64,7 @@ export const StudentCumulativeRecord: React.FC = () => {
             </div>
           ))}
         </div>
+        <p className="text-xs text-gray-400 text-right mt-4">자동 저장됨 (입력 후 포커스를 해제하세요)</p>
       </CardContent>
     </Card>
   );
