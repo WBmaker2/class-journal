@@ -94,7 +94,7 @@ export const usePDFExport = () => {
         element.style.position = 'fixed';
         element.style.left = '0';
         element.style.top = '0';
-        element.style.zIndex = '-9999';
+        element.style.zIndex = '9999';
 
         const canvas = await html2canvas(element, {
           scale: 2,

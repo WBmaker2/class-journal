@@ -76,7 +76,7 @@ export const ClassLogEditor: React.FC = () => {
       
       setIsExporting(false);
       setIsExportModalOpen(false);
-    }, 100);
+    }, 500);
   };
 
   return (
@@ -111,7 +111,7 @@ export const ClassLogEditor: React.FC = () => {
 
       {/* Hidden Render Area for Batch Export */}
       {(isExportModalOpen || isExporting) && (
-        <div className="fixed top-0 left-0" style={{ zIndex: -1000, visibility: 'hidden' }}>
+        <div className="fixed top-0 left-0 pointer-events-none" style={{ zIndex: 1000 }}>
            {/* Render all records in range */}
            {getSortedRecords().map((record) => (
              <div 
