@@ -173,7 +173,7 @@ export const SettingsManager: React.FC = () => {
                   <span className="text-xs text-blue-600">(마지막에 '/'가 없어야 합니다)</span>
                 </li>
                 <li>저장 후 <strong>Client ID</strong>를 복사하여 아래에 입력하세요.</li>
-                <li><a hred="https://goldenrabbit.co.kr/articles/p4esg2wuouyO0dTyDYGG">OAuth 2.0 클라이언트 ID 발급 방법 참고 자료</a> 승인된 자바스크립트 원본 주소는 꼭 위 안내된 주소를 입력하세요. 승인된 리디렉션 URI는 비워둡니다.</li>
+                <li><a href="https://goldenrabbit.co.kr/articles/p4esg2wuouyO0dTyDYGG">OAuth 2.0 클라이언트 ID 발급 방법 참고 자료</a> 승인된 자바스크립트 원본 주소는 꼭 위 안내된 주소를 입력하세요. 승인된 리디렉션 URI는 비워둡니다.</li>
               </ol>
             </div>
           </div>
