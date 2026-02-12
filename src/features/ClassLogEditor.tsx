@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Calendar } from 'lucide-react';
+import { Download, Calendar, FileSpreadsheet } from 'lucide-react';
 import { useJournal } from '../context/JournalContext';
 import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { usePDFExport } from '../hooks/usePDFExport';
+import { useExcelExport } from '../hooks/useExcelExport';
 import type { DailyRecord } from '../types';
 
 export const ClassLogEditor: React.FC = () => {
   const { currentDate, records, saveCurrentRecord, students } = useJournal();
   const [log, setLog] = useState('');
-  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [exportMode, setExportMode] = useState<'pdf' | 'excel' | null>(null);
   const [startDate, setStartDate] = useState(currentDate);
   const [endDate, setEndDate] = useState(currentDate);
   const [isExporting, setIsExporting] = useState(false);
   
   const { exportBatchToPDF } = usePDFExport();
+  const { exportToExcel } = useExcelExport();
 
   const currentRecord = records.find(r => r.date === currentDate);
 
@@ -29,11 +31,11 @@ export const ClassLogEditor: React.FC = () => {
 
   // Update default dates when modal opens
   useEffect(() => {
-    if (isExportModalOpen) {
+    if (exportMode) {
       setStartDate(currentDate);
       setEndDate(currentDate);
     }
-  }, [isExportModalOpen, currentDate]);
+  }, [exportMode, currentDate]);
 
   const handleSave = () => {
     const newRecord: DailyRecord = currentRecord ? {
@@ -57,6 +59,28 @@ export const ClassLogEditor: React.FC = () => {
       .sort((a, b) => a.date.localeCompare(b.date));
   };
 
+  const handleExcelExport = () => {
+    const sortedRecords = getSortedRecords();
+    if (sortedRecords.length === 0) {
+      alert('선택한 기간에 기록된 일지가 없습니다.');
+      return;
+    }
+
+    const data = sortedRecords.map(record => ({
+      날짜: record.date,
+      날씨: record.weather,
+      분위기: record.atmosphere,
+      일지내용: record.classLog
+    }));
+
+    exportToExcel({
+      data,
+      filename: `학급일지_${startDate}_${endDate}`,
+      sheetName: '학급일지'
+    });
+    setExportMode(null);
+  };
+
   const handleBatchExport = async () => {
     setIsExporting(true);
     // Allow React to render the hidden elements
@@ -76,7 +100,7 @@ export const ClassLogEditor: React.FC = () => {
       });
       
       setIsExporting(false);
-      setIsExportModalOpen(false);
+      setExportMode(null);
     }, 500);
   };
 
@@ -87,15 +111,26 @@ export const ClassLogEditor: React.FC = () => {
           title="학급 일지" 
           subtitle="오늘 있었던 주요 사항을 자유롭게 기록하세요" 
           actions={
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => setIsExportModalOpen(true)}
-              className="flex items-center gap-2"
-            >
-              <Download size={16} />
-              PDF 다운로드
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setExportMode('excel')}
+                className="flex items-center gap-2 border-green-600 text-green-700 hover:bg-green-50"
+              >
+                <FileSpreadsheet size={16} />
+                EXCEL 다운로드
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setExportMode('pdf')}
+                className="flex items-center gap-2"
+              >
+                <Download size={16} />
+                PDF 다운로드
+              </Button>
+            </div>
           }
         />
         <CardContent className="space-y-4">
@@ -111,7 +146,7 @@ export const ClassLogEditor: React.FC = () => {
       </Card>
 
       {/* Hidden Render Area for Batch Export */}
-      {(isExportModalOpen || isExporting) && (
+      {(exportMode === 'pdf' || isExporting) && (
         <div className="fixed top-0 left-0 pointer-events-none" style={{ zIndex: 1000 }}>
            {/* Render all records in range */}
            {getSortedRecords().map((record) => (
@@ -139,16 +174,16 @@ export const ClassLogEditor: React.FC = () => {
 
       {/* Export Range Modal */}
       <Modal
-        isOpen={isExportModalOpen}
-        onClose={() => setIsExportModalOpen(false)}
-        title="학급 일지 PDF 내보내기"
+        isOpen={exportMode !== null}
+        onClose={() => setExportMode(null)}
+        title={exportMode === 'pdf' ? "학급 일지 PDF 내보내기" : "학급 일지 EXCEL 내보내기"}
         footer={
           <div className="flex justify-end gap-2 w-full">
-            <Button variant="outline" onClick={() => setIsExportModalOpen(false)}>
+            <Button variant="outline" onClick={() => setExportMode(null)}>
               취소
             </Button>
-            <Button onClick={handleBatchExport} disabled={isExporting}>
-              {isExporting ? '생성 중...' : 'PDF 생성'}
+            <Button onClick={exportMode === 'pdf' ? handleBatchExport : handleExcelExport} disabled={isExporting}>
+              {isExporting ? '생성 중...' : (exportMode === 'pdf' ? 'PDF 생성' : 'EXCEL 생성')}
             </Button>
           </div>
         }

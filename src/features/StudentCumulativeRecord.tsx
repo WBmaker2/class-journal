@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Calendar } from 'lucide-react';
+import { Download, Calendar, FileSpreadsheet } from 'lucide-react';
 import { useJournal } from '../context/JournalContext';
 import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { usePDFExport } from '../hooks/usePDFExport';
+import { useExcelExport } from '../hooks/useExcelExport';
 import type { DailyRecord, Student } from '../types';
 
 export const StudentCumulativeRecord: React.FC = () => {
@@ -12,12 +13,13 @@ export const StudentCumulativeRecord: React.FC = () => {
   const [studentNotes, setStudentNotes] = useState<Record<string, string>>({});
   
   // Export states
-  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [exportMode, setExportMode] = useState<'pdf' | 'excel' | null>(null);
   const [startDate, setStartDate] = useState(currentDate);
   const [endDate, setEndDate] = useState(currentDate);
   const [isExporting, setIsExporting] = useState(false);
   
   const { exportBatchToPDF } = usePDFExport();
+  const { exportToExcel } = useExcelExport();
 
   useEffect(() => {
     const record = records.find(r => r.date === currentDate);
@@ -30,11 +32,11 @@ export const StudentCumulativeRecord: React.FC = () => {
 
   // Update default dates when modal opens
   useEffect(() => {
-    if (isExportModalOpen) {
+    if (exportMode) {
       setStartDate(currentDate);
       setEndDate(currentDate);
     }
-  }, [isExportModalOpen, currentDate]);
+  }, [exportMode, currentDate]);
 
   const handleNoteChange = (studentId: string, note: string) => {
     setStudentNotes(prev => ({
@@ -84,6 +86,40 @@ export const StudentCumulativeRecord: React.FC = () => {
     return summaries;
   };
 
+  const handleExcelExport = () => {
+    const summaries = getStudentSummaries();
+    if (summaries.length === 0) {
+      alert('선택한 기간에 기록된 내용이 없습니다.');
+      return;
+    }
+
+    // Flatten data for Excel
+    const data: any[] = [];
+    summaries.forEach(summary => {
+      summary.entries.forEach(entry => {
+        data.push({
+          날짜: entry.date,
+          번호: summary.student.number,
+          이름: summary.student.name,
+          내용: entry.note
+        });
+      });
+    });
+
+    // Sort by Date then Number
+    data.sort((a, b) => {
+      if (a.날짜 !== b.날짜) return a.날짜.localeCompare(b.날짜);
+      return a.번호 - b.번호;
+    });
+
+    exportToExcel({
+      data,
+      filename: `학생별누가기록_${startDate}_${endDate}`,
+      sheetName: '누가기록'
+    });
+    setExportMode(null);
+  };
+
   const handleBatchExport = async () => {
     setIsExporting(true);
     setTimeout(async () => {
@@ -102,7 +138,7 @@ export const StudentCumulativeRecord: React.FC = () => {
       });
       
       setIsExporting(false);
-      setIsExportModalOpen(false);
+      setExportMode(null);
     }, 500);
   };
 
@@ -113,15 +149,26 @@ export const StudentCumulativeRecord: React.FC = () => {
           title="학생별 누가기록" 
           subtitle={`${currentDate} 학생별 관찰 내용 기록`}
           actions={
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => setIsExportModalOpen(true)}
-              className="flex items-center gap-2"
-            >
-              <Download size={16} />
-              PDF 다운로드
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setExportMode('excel')}
+                className="flex items-center gap-2 border-green-600 text-green-700 hover:bg-green-50"
+              >
+                <FileSpreadsheet size={16} />
+                EXCEL 다운로드
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setExportMode('pdf')}
+                className="flex items-center gap-2"
+              >
+                <Download size={16} />
+                PDF 다운로드
+              </Button>
+            </div>
           } 
         />
         <CardContent>
@@ -150,7 +197,7 @@ export const StudentCumulativeRecord: React.FC = () => {
       </Card>
 
       {/* Hidden Render Area for Batch Export */}
-      {(isExportModalOpen || isExporting) && (
+      {(exportMode === 'pdf' || isExporting) && (
         <div className="fixed top-0 left-0 pointer-events-none" style={{ zIndex: 1000 }}>
            {getStudentSummaries().map((summary) => (
              <div 
@@ -187,16 +234,16 @@ export const StudentCumulativeRecord: React.FC = () => {
 
       {/* Export Range Modal */}
       <Modal
-        isOpen={isExportModalOpen}
-        onClose={() => setIsExportModalOpen(false)}
-        title="학생별 누가기록 PDF 내보내기"
+        isOpen={exportMode !== null}
+        onClose={() => setExportMode(null)}
+        title={exportMode === 'pdf' ? "학생별 누가기록 PDF 내보내기" : "학생별 누가기록 EXCEL 내보내기"}
         footer={
           <div className="flex justify-end gap-2 w-full">
-            <Button variant="outline" onClick={() => setIsExportModalOpen(false)}>
+            <Button variant="outline" onClick={() => setExportMode(null)}>
               취소
             </Button>
-            <Button onClick={handleBatchExport} disabled={isExporting}>
-              {isExporting ? '생성 중...' : 'PDF 생성'}
+            <Button onClick={exportMode === 'pdf' ? handleBatchExport : handleExcelExport} disabled={isExporting}>
+              {isExporting ? '생성 중...' : (exportMode === 'pdf' ? 'PDF 생성' : 'EXCEL 생성')}
             </Button>
           </div>
         }
